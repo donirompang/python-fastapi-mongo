@@ -1,0 +1,5 @@
+from business.billerTelegramBot.service import BillerTelegramBotService, BillerTelegramBotServiceInterface
+from modules.repository.billerTelegramBot.mongo_repo import BillerTelegramBotMongoRepository
+
+def get_biller_telegram_bot_service() -> BillerTelegramBotServiceInterface:
+    return BillerTelegramBotService(BillerTelegramBotMongoRepository())
