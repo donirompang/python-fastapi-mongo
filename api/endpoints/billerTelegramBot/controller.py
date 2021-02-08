@@ -15,11 +15,6 @@ async def create_user(billerTelegramBot: BillerTelegramBot, billerTelegramBotSer
     return billerTelegramBotService.create_biller_telegram_bot(billerTelegramBot)
 
 
-@router.get("")
-async def home():
-    return {"message": "Hello World!"}
-
-
 @router.get("/{id}", response_model=BillerTelegramBot)
 async def get_user_by_id(id: str, billerTelegramBotService: BillerTelegramBotServiceInterface = Depends(get_biller_telegram_bot_service)) -> Optional[BillerTelegramBot]:
     billerTelegramBot = await billerTelegramBotService.get_by_group_id(id)

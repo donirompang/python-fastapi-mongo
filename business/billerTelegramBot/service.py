@@ -13,21 +13,21 @@ from business.billerTelegramBot.model import BillerTelegramBot
 
 class BillerTelegramBotRepositoryInterface(metaclass=ABCMeta):
     @abstractmethod
-    async def create_biller_telegram_bot(self, billerTelegramBot: BillerTelegramBot) -> BillerTelegramBot:
+    def create_biller_telegram_bot(self, billerTelegramBot: BillerTelegramBot) -> BillerTelegramBot:
         raise NotImplementedError
 
     @abstractmethod
-    async def get_by_group_id(self, id: str) -> BillerTelegramBot:
+    def get_by_group_id(self, id: str) -> BillerTelegramBot:
         raise NotImplementedError
 
 
 class BillerTelegramBotServiceInterface(metaclass=ABCMeta):
     @abstractmethod
-    async def create_biller_telegram_bot(self, billerTelegramBot: BillerTelegramBot) -> BillerTelegramBot:
+    def create_biller_telegram_bot(self, billerTelegramBot: BillerTelegramBot) -> BillerTelegramBot:
         raise NotImplementedError
 
     @abstractmethod
-    async def get_by_group_id(self, id: str) -> Optional[BillerTelegramBot]:
+    def get_by_group_id(self, id: str) -> Optional[BillerTelegramBot]:
         raise NotImplementedError
 
 
@@ -35,12 +35,11 @@ class BillerTelegramBotService(BillerTelegramBotServiceInterface):
     def __init__(self, biller_tele_bot_repo: BillerTelegramBotRepositoryInterface):
         self.__repo = biller_tele_bot_repo
 
-    async def create_biller_telegram_bot(self, billerTelegramBot: BillerTelegramBot) -> BillerTelegramBot:
-        billerTelegramBot = await self.__repo.create_biller_telegram_bot(billerTelegramBot)
-        return BillerTelegramBot.from_orm(billerTelegramBot)
+    def create_biller_telegram_bot(self, billerTelegramBot: BillerTelegramBot) -> BillerTelegramBot:
+        return self.__repo.create_biller_telegram_bot(billerTelegramBot)
 
-    async def get_by_group_id(self, id: str) -> Optional[BillerTelegramBot]:
-        billerTelegramBot = await self.__repo.get_by_group_id(id)
+    def get_by_group_id(self, id: str) -> Optional[BillerTelegramBot]:
+        billerTelegramBot = self.__repo.get_by_group_id(id)
         if billerTelegramBot:
             return BillerTelegramBot.from_orm(billerTelegramBot)
         else:

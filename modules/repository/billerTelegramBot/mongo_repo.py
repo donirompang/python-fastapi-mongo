@@ -8,12 +8,12 @@ from business.billerTelegramBot.model import BillerTelegramBot
 connect('project1', host='mongodb://localhost/rigorous')
 
 class BillerTelegramBotMongoRepository(BillerTelegramBotRepositoryInterface):
-    async def create_biller_telegram_bot(self, billerTelegramBot: BillerTelegramBot) -> BillerTelegramBot:
+    def create_biller_telegram_bot(self, billerTelegramBot: BillerTelegramBot) -> BillerTelegramBot:
         result = ModelDB(group_id=billerTelegramBot.group_id, name=billerTelegramBot.name)
         result.save()
         return BillerTelegramBot.parse_obj(result.to_mongo())
 
-    async def get_by_group_id(self, id: str) -> BillerTelegramBot:
+    def get_by_group_id(self, id: str) -> BillerTelegramBot:
         result = ModelDB.objects.get(group_id=id)
         return BillerTelegramBot.parse_obj(result.to_mongo())
 
