@@ -1,15 +1,17 @@
 from typing import Optional
 from mongoengine import connect
-from modules.repository.billerTelegramBot.mongo_model import BillerTelegramBot as ModelDB
+from modules.repository.billerTelegramBot.model import BillerTelegramBot as ModelDB
 from business.billerTelegramBot.service import BillerTelegramBotRepositoryInterface
 from business.billerTelegramBot.model import BillerTelegramBot
 
-# connect mongo
-connect('project1', host='mongodb://localhost/rigorous')
 
 class BillerTelegramBotMongoRepository(BillerTelegramBotRepositoryInterface):
     def create_biller_telegram_bot(self, billerTelegramBot: BillerTelegramBot) -> BillerTelegramBot:
-        result = ModelDB(group_id=billerTelegramBot.group_id, name=billerTelegramBot.name)
+        result = ModelDB(
+            telegram_group_id=billerTelegramBot.telegram_group_id,
+            biller_name=billerTelegramBot.biller_name,
+            price_changes_pattern=[x.dict() for x in billerTelegramBot.price_changes_pattern]
+        )
         result.save()
         return BillerTelegramBot.parse_obj(result.to_mongo())
 

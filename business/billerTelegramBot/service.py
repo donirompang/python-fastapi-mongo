@@ -7,8 +7,6 @@ from typing import TYPE_CHECKING
 
 from business.billerTelegramBot.model import BillerTelegramBot
 
-# if TYPE_CHECKING:
-#     from src.infrastructure.database.models.user import BillerTelegramBot
 
 
 class BillerTelegramBotRepositoryInterface(metaclass=ABCMeta):
